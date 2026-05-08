@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Leaflet tooltip overrides ─────────────────────────────────────────────── */
+.basin-tip {
+  background: rgba(11,20,34,0.97) !important;
+  border: 1px solid rgba(41,128,185,0.3) !important;
+  border-radius: 8px !important;
+  padding: 10px 13px !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 13px !important;
+  color: #C8D8EA !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+  min-width: 180px;
+}
+.basin-tip::before { display: none !important; }
+.tip-name { font-family: 'Fira Code', monospace; font-weight: 700; font-size: 0.84rem; margin-bottom: 4px; }
+.tip-row  { display: flex; justify-content: space-between; gap: 12px; margin-top: 3px; }
+.tip-label{ color: #6B82A0; font-size: 0.68rem; }
+.tip-val  { font-family: 'Fira Code', monospace; font-size: 0.78rem; font-weight: 600; }
+
+/* Leaflet dark controls */
+.leaflet-control-attribution { background: rgba(11,20,34,0.85) !important; color: #3F5268 !important; font-size: 9px !important; }
+.leaflet-control-attribution a { color: #3F5268 !important; }
+.leaflet-control-zoom a { background: #162030 !important; color: #6B82A0 !important; border-color: rgba(255,255,255,0.08) !important; }
+.leaflet-control-zoom a:hover { background: #1E2D3F !important; color: #C8D8EA !important; }
+
+/* ── Root tokens ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0B1422;
+  --surface:   #111D2E;
+  --surface2:  #162030;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --blue:      #2980B9;
+  --blue-l:    #5DADE2;
+  --text:      #C8D8EA;
+  --text2:     #6B82A0;
+  --text3:     #3F5268;
+  --normal:    #1E8449;
+  --moderate:  #B7950B;
+  --severe:    #A04000;
+  --extreme:   #7B241C;
+}
+
+html, body, #root {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* subtle grid bg */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(41,128,185,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(41,128,185,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Utility classes ───────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.25s;
+}
+.card:hover { border-color: var(--border2); }
+
+.slabel {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--blue-l); opacity: 0.65;
+}
+
+.kpi-val { font-family: 'Fira Code', monospace; font-size: 2.4rem; font-weight: 700; line-height: 1; }
+.kpi-sub { font-size: 0.72rem; color: var(--text2); margin-top: 6px; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.67rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.chip-n { background: rgba(30,132,73,0.18);  color: #27AE60; border: 1px solid rgba(30,132,73,0.35); }
+.chip-m { background: rgba(183,149,11,0.18); color: #D4AC0D; border: 1px solid rgba(183,149,11,0.35); }
+.chip-s { background: rgba(160,64,0,0.2);    color: #E67E22; border: 1px solid rgba(160,64,0,0.4); }
+.chip-e { background: rgba(123,36,28,0.22);  color: #E74C3C; border: 1px solid rgba(123,36,28,0.45); }
+
+.bdg {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(41,128,185,0.1); border: 1px solid rgba(41,128,185,0.2);
+  border-radius: 5px; padding: 2px 8px;
+  font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #5DADE2;
+}
+
+.mbar { height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.mbar-fill { height: 100%; border-radius: 2px; }
+
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #27AE60;
+  display: inline-block;
+  animation: live 2s ease-in-out infinite;
+}
+@keyframes live {
+  0%,100% { box-shadow: 0 0 0 0 rgba(39,174,96,0.5); }
+  50%      { box-shadow: 0 0 0 6px rgba(39,174,96,0); }
+}
+
+.pulse-e { animation: px 2.5s ease-in-out infinite; }
+@keyframes px {
+  0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.45); }
+  50%      { box-shadow: 0 0 0 8px rgba(192,57,43,0); }
+}
+
+.htog { display: flex; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 3px; gap: 2px; }
+.htbtn {
+  padding: 3px 12px; border-radius: 4px; border: none; background: transparent;
+  color: var(--text2); font-family: 'Fira Code', monospace; font-size: 0.7rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.htbtn.on { background: rgba(41,128,185,0.25); color: #5DADE2; }
+.htbtn:hover:not(.on) { background: rgba(255,255,255,0.05); color: var(--text); }
+
+.arow {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 10px; border-radius: 7px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s; cursor: default;
+}
+.arow:hover { background: rgba(255,255,255,0.04); }
+
+.pipe-step {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 10px; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+}
+.pipe-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.mtbl th {
+  font-family: 'Fira Code', monospace; font-size: 0.62rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text2); padding: 7px 10px; text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+.mtbl th:first-child { text-align: left; }
+.mtbl td {
+  font-family: 'Fira Code', monospace; font-size: 0.78rem;
+  padding: 8px 10px; text-align: right;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text2);
+}
+.mtbl td:first-child { text-align: left; font-size: 0.75rem; }
+.mtbl tr.best td { background: rgba(41,128,185,0.05); }
+.mtbl tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── Bento grid ────────────────────────────────────────────────────────────── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+.b-map    { grid-column: span 5; grid-row: span 2; min-height: 560px; }
+.b-spi    { grid-column: span 7; }
+.b-shap   { grid-column: span 4; }
+.b-alert  { grid-column: span 3; }
+.b-models { grid-column: span 5; }
+.b-info   { grid-column: span 4; }
+
+@media (max-width: 1280px) {
+  .b-map, .b-spi { grid-column: span 12; }
+  .b-map { min-height: 440px; grid-row: span 1; }
+  .b-shap, .b-alert { grid-column: span 6; }
+  .b-models, .b-info { grid-column: span 12; }
+}
+@media (max-width: 700px) {
+  .bento > * { grid-column: span 12 !important; grid-row: span 1 !important; }
+  .b-map { min-height: 360px; }
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0B1422; }
+::-webkit-scrollbar-thumb { background: rgba(41,128,185,0.3); border-radius: 3px; }
